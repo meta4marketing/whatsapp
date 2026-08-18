@@ -2,170 +2,1141 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Lead Tracker</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+  <style>
+    body {
+      background: #f5f6f8;
+    }
+
+    .card {
+      border: none;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      min-width: 1200px;
+    }
+
+    .action-buttons {
+      white-space: nowrap;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 30px;
+    }
+  </style>
 </head>
-<body class="p-5">
 
-<div class="card shadow p-4 mb-4">
-  <h2 class="mb-4">Lead Tracker</h2>
-  <form id="leadForm">
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Business Name</label>
-        <input type="text" id="businessName" class="form-control" required>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Address</label>
-        <input type="text" id="address" class="form-control" required>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Phone</label>
-        <input type="text" id="phone" class="form-control" required>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Call Date</label>
-        <input type="date" id="callDate" class="form-control">
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Call Result</label>
-        <input type="text" id="callResult" class="form-control">
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">WhatsApp Sent</label>
-        <input type="text" id="whatsappSent" class="form-control">
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">WhatsApp Seen</label>
-        <input type="text" id="whatsappSeen" class="form-control">
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Followup Date</label>
-        <input type="date" id="followupDate" class="form-control">
-      </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Lead Status</label>
-        <input type="text" id="leadStatus" class="form-control">
-      </div>
-      <div class="col-md-12 mb-3">
-        <label class="form-label">Notes</label>
-        <textarea id="notes" class="form-control"></textarea>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Save Lead</button>
-  </form>
-</div>
+<body class="p-3 p-md-5">
 
-<!-- Table -->
-<div class="card shadow p-4">
-  <h3 class="mb-3">Leads Table</h3>
-  <table class="table table-bordered" id="leadsTable">
-    <thead>
-      <tr>
-        <th>Business Name</th>
-        <th>Address</th>
-        <th>Phone</th>
-        <th>Call Date</th>
-        <th>Call Result</th>
-        <th>WhatsApp Sent</th>
-        <th>WhatsApp Seen</th>
-        <th>Followup Date</th>
-        <th>Lead Status</th>
-        <th>Notes</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-  </table>
-</div>
+<div class="container-fluid">
 
-<!-- Edit Modal -->
-<div class="modal fade" id="editModal" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Edit Lead</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <!-- =========================
+       ADD LEAD FORM
+  ========================== -->
+  <div class="card shadow p-4 mb-4">
+
+    <h2 class="mb-4">Lead Tracker</h2>
+
+    <form id="leadForm">
+
+      <div class="row">
+
+        <!-- Business Name -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Business Name</label>
+          <input
+            type="text"
+            id="businessName"
+            class="form-control"
+            required
+          >
+        </div>
+
+        <!-- Address -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Address</label>
+          <input
+            type="text"
+            id="address"
+            class="form-control"
+            required
+          >
+        </div>
+
+        <!-- Phone -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Phone</label>
+          <input
+            type="text"
+            id="phone"
+            class="form-control"
+            required
+          >
+        </div>
+
+        <!-- Call Date -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Call Date</label>
+          <input
+            type="date"
+            id="callDate"
+            class="form-control"
+          >
+        </div>
+
+        <!-- Call Result -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Call Result</label>
+          <input
+            type="text"
+            id="callResult"
+            class="form-control"
+          >
+        </div>
+
+        <!-- WhatsApp Sent -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">WhatsApp Sent</label>
+          <input
+            type="text"
+            id="whatsappSent"
+            class="form-control"
+          >
+        </div>
+
+        <!-- WhatsApp Seen -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">WhatsApp Seen</label>
+          <input
+            type="text"
+            id="whatsappSeen"
+            class="form-control"
+          >
+        </div>
+
+        <!-- Followup Date -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Followup Date</label>
+          <input
+            type="date"
+            id="followupDate"
+            class="form-control"
+          >
+        </div>
+
+        <!-- Lead Status -->
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Lead Status</label>
+          <input
+            type="text"
+            id="leadStatus"
+            class="form-control"
+          >
+        </div>
+
+        <!-- Notes -->
+        <div class="col-md-12 mb-3">
+          <label class="form-label">Notes</label>
+
+          <textarea
+            id="notes"
+            class="form-control"
+            rows="3"
+          ></textarea>
+
+        </div>
+
       </div>
-      <div class="modal-body">
-        <form id="editForm">
-          <input type="hidden" id="editId">
-          <div class="row">
-            <div class="col-md-6 mb-3"><input type="text" id="editBusinessName" class="form-control" placeholder="Business Name"></div>
-            <div class="col-md-6 mb-3"><input type="text" id="editAddress" class="form-control" placeholder="Address"></div>
-            <div class="col-md-6 mb-3"><input type="text" id="editPhone" class="form-control" placeholder="Phone"></div>
-            <div class="col-md-6 mb-3"><input type="date" id="editCallDate" class="form-control"></div>
-            <div class="col-md-6 mb-3"><input type="text" id="editCallResult" class="form-control" placeholder="Call Result"></div>
-            <div class="col-md-6 mb-3"><input type="text" id="editWhatsappSent" class="form-control" placeholder="WhatsApp Sent"></div>
-            <div class="col-md-6 mb-3"><input type="text" id="editWhatsappSeen" class="form-control" placeholder="WhatsApp Seen"></div>
-            <div class="col-md-6 mb-3"><input type="date" id="editFollowupDate" class="form-control"></div>
-            <div class="col-md-6 mb-3"><input type="text" id="editLeadStatus" class="form-control" placeholder="Lead Status"></div>
-            <div class="col-md-12 mb-3"><textarea id="editNotes" class="form-control" placeholder="Notes"></textarea></div>
-          </div>
-          <button type="submit" class="btn btn-success">Update Lead</button>
-        </form>
-      </div>
-    </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        id="saveButton"
+      >
+        Save Lead
+      </button>
+
+    </form>
+
   </div>
+
+
+  <!-- =========================
+       LEADS TABLE
+  ========================== -->
+
+  <div class="card shadow p-4">
+
+    <h3 class="mb-3">Leads Table</h3>
+
+    <div class="table-container">
+
+      <table class="table table-bordered table-hover align-middle">
+
+        <thead class="table-dark">
+
+          <tr>
+
+            <th>Business Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Call Date</th>
+            <th>Call Result</th>
+            <th>WhatsApp Sent</th>
+            <th>WhatsApp Seen</th>
+            <th>Followup Date</th>
+            <th>Lead Status</th>
+            <th>Notes</th>
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="tableBody">
+
+          <tr>
+            <td colspan="11" class="loading">
+              Loading leads...
+            </td>
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- =========================
+     EDIT MODAL
+========================== -->
+
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-hidden="true"
+>
+
+  <div class="modal-dialog modal-lg">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h5 class="modal-title">
+          Edit Lead
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+
+      </div>
+
+
+      <div class="modal-body">
+
+        <form id="editForm">
+
+          <input
+            type="hidden"
+            id="editId"
+          >
+
+          <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Business Name
+              </label>
+
+              <input
+                type="text"
+                id="editBusinessName"
+                class="form-control"
+                required
+              >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Address
+              </label>
+
+              <input
+                type="text"
+                id="editAddress"
+                class="form-control"
+                required
+              >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Phone
+              </label>
+
+              <input
+                type="text"
+                id="editPhone"
+                class="form-control"
+                required
+              >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Call Date
+              </label>
+
+              <input
+                type="date"
+                id="editCallDate"
+                class="form-control"
+              >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Call Result
+              </label>
+
+              <input
+                type="text"
+                id="editCallResult"
+                class="form-control"
+              >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                WhatsApp Sent
+              </label>
+
+              <input
+                type="text"
+                id="editWhatsappSent"
+                class="form-control"
+              >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                WhatsApp Seen
+              </label>
+
+              <input
+                type="text"
+                id="editWhatsappSeen"
+                class="form-control"
+              >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Followup Date
+              </label>
+
+              <input
+                type="date"
+                id="editFollowupDate"
+                class="form-control"
+              >
+
+            </div>
+
+
+            <div class="col-md-6 mb-3">
+
+              <label class="form-label">
+                Lead Status
+              </label>
+
+              <input
+                type="text"
+                id="editLeadStatus"
+                class="form-control"
+              >
+
+            </div>
+
+
+            <div class="col-md-12 mb-3">
+
+              <label class="form-label">
+                Notes
+              </label>
+
+              <textarea
+                id="editNotes"
+                class="form-control"
+                rows="3"
+              ></textarea>
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="submit"
+            class="btn btn-success"
+          >
+            Update Lead
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- Bootstrap JS -->
+
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
 <script>
-  // 🔹 Firebase Config (replace with your project credentials)
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "your-project-id.firebaseapp.com",
-    projectId: "your-project-id",
-    storageBucket: "your-project-id.appspot.com",
-    messagingSenderId: "SENDER_ID",
-    appId: "APP_ID"
-  };
 
-  const app = firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-  const form = document.getElementById("leadForm");
-  const tableBody = document.getElementById("tableBody");
-  const editForm = document.getElementById("editForm");
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAmeouRGrSiGMU-OaMtaKghNPUWSCtTgtQ",
+  authDomain: "studio-9765353447-3bfaa.firebaseapp.com",
+  projectId: "studio-9765353447-3bfaa",
+  storageBucket: "studio-9765353447-3bfaa.firebasestorage.app",
+  messagingSenderId: "623664784322",
+  appId: "1:623664784322:web:e368268faea94a3b046c5b"
+};
 
-  // Save Lead
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    await db.collection("leads").add({
-      businessName: document.getElementById("businessName").value,
-      address: document.getElementById("address").value,
-      phone: document.getElementById("phone").value,
-      callDate: document.getElementById("callDate").value,
-      callResult: document.getElementById("callResult").value,
-      whatsappSent: document.getElementById("whatsappSent").value,
-      whatsappSeen: document.getElementById("whatsappSeen").value,
-      followupDate: document.getElementById("followupDate").value,
-      leadStatus: document.getElementById("leadStatus").value,
-      notes: document.getElementById("notes").value,
-      createdAt: new Date()
-    });
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+/* =========================================
+   DOM ELEMENTS
+========================================= */
+
+const form = document.getElementById("leadForm");
+
+const tableBody = document.getElementById("tableBody");
+
+const editForm = document.getElementById("editForm");
+
+const editModalElement = document.getElementById("editModal");
+
+const editModal = new bootstrap.Modal(editModalElement);
+
+
+/* =========================================
+   SAVE NEW LEAD
+========================================= */
+
+form.addEventListener("submit", async function(e) {
+
+  e.preventDefault();
+
+  const saveButton = document.getElementById("saveButton");
+
+  try {
+
+    saveButton.disabled = true;
+
+    saveButton.innerText = "Saving...";
+
+
+    const leadData = {
+
+      businessName:
+        document.getElementById("businessName").value.trim(),
+
+      address:
+        document.getElementById("address").value.trim(),
+
+      phone:
+        document.getElementById("phone").value.trim(),
+
+      callDate:
+        document.getElementById("callDate").value,
+
+      callResult:
+        document.getElementById("callResult").value.trim(),
+
+      whatsappSent:
+        document.getElementById("whatsappSent").value.trim(),
+
+      whatsappSeen:
+        document.getElementById("whatsappSeen").value.trim(),
+
+      followupDate:
+        document.getElementById("followupDate").value,
+
+      leadStatus:
+        document.getElementById("leadStatus").value.trim(),
+
+      notes:
+        document.getElementById("notes").value.trim(),
+
+      createdAt:
+        firebase.firestore.FieldValue.serverTimestamp()
+
+    };
+
+
+    await db.collection("leads").add(leadData);
+
+
+    alert("Lead saved successfully!");
+
+
     form.reset();
-  });
 
-  // Fetch + Show Table
-  db.collection("leads").onSnapshot((snapshot) => {
-    tableBody.innerHTML = "";
-    snapshot.forEach((doc) => {
-      const data = doc.data();
-      const row = `
+
+  } catch(error) {
+
+    console.error("Save Error:", error);
+
+    alert(
+      "Error saving lead:\n" + error.message
+    );
+
+  } finally {
+
+    saveButton.disabled = false;
+
+    saveButton.innerText = "Save Lead";
+
+  }
+
+});
+
+
+/* =========================================
+   FETCH LEADS REAL-TIME
+========================================= */
+
+db.collection("leads")
+  .orderBy("createdAt", "desc")
+  .onSnapshot(
+
+    function(snapshot) {
+
+      tableBody.innerHTML = "";
+
+
+      if(snapshot.empty) {
+
+        tableBody.innerHTML = `
+
+          <tr>
+
+            <td
+              colspan="11"
+              class="text-center text-muted"
+            >
+              No leads found.
+            </td>
+
+          </tr>
+
+        `;
+
+        return;
+
+      }
+
+
+      snapshot.forEach(function(doc) {
+
+        const data = doc.data();
+
+
+        const row = document.createElement("tr");
+
+
+        /* Business Name */
+
+        const businessCell =
+          document.createElement("td");
+
+        businessCell.textContent =
+          data.businessName || "";
+
+        row.appendChild(businessCell);
+
+
+        /* Address */
+
+        const addressCell =
+          document.createElement("td");
+
+        addressCell.textContent =
+          data.address || "";
+
+        row.appendChild(addressCell);
+
+
+        /* Phone */
+
+        const phoneCell =
+          document.createElement("td");
+
+        phoneCell.innerHTML = data.phone
+          ? `<a href="tel:${data.phone}">
+               ${escapeHtml(data.phone)}
+             </a>`
+          : "";
+
+        row.appendChild(phoneCell);
+
+
+        /* Call Date */
+
+        row.appendChild(
+          createCell(data.callDate)
+        );
+
+
+        /* Call Result */
+
+        row.appendChild(
+          createCell(data.callResult)
+        );
+
+
+        /* WhatsApp Sent */
+
+        row.appendChild(
+          createCell(data.whatsappSent)
+        );
+
+
+        /* WhatsApp Seen */
+
+        row.appendChild(
+          createCell(data.whatsappSeen)
+        );
+
+
+        /* Followup Date */
+
+        row.appendChild(
+          createCell(data.followupDate)
+        );
+
+
+        /* Lead Status */
+
+        const statusCell =
+          document.createElement("td");
+
+        statusCell.innerHTML =
+          getStatusBadge(data.leadStatus);
+
+        row.appendChild(statusCell);
+
+
+        /* Notes */
+
+        row.appendChild(
+          createCell(data.notes)
+        );
+
+
+        /* Actions */
+
+        const actionCell =
+          document.createElement("td");
+
+        actionCell.className =
+          "action-buttons";
+
+
+        /* Edit Button */
+
+        const editButton =
+          document.createElement("button");
+
+        editButton.className =
+          "btn btn-sm btn-warning me-1";
+
+        editButton.innerText =
+          "Edit";
+
+
+        editButton.addEventListener(
+          "click",
+          function() {
+
+            openEdit(doc.id, data);
+
+          }
+        );
+
+
+        /* Delete Button */
+
+        const deleteButton =
+          document.createElement("button");
+
+        deleteButton.className =
+          "btn btn-sm btn-danger";
+
+        deleteButton.innerText =
+          "Delete";
+
+
+        deleteButton.addEventListener(
+          "click",
+          function() {
+
+            deleteLead(doc.id);
+
+          }
+        );
+
+
+        actionCell.appendChild(editButton);
+
+        actionCell.appendChild(deleteButton);
+
+
+        row.appendChild(actionCell);
+
+
+        tableBody.appendChild(row);
+
+      });
+
+    },
+
+
+    function(error) {
+
+      console.error(
+        "Firestore Error:",
+        error
+      );
+
+
+      tableBody.innerHTML = `
+
         <tr>
-          <td>${data.businessName}</td>
-          <td>${data.address}</td>
-          <td>${data.phone}</td>
-          <td>${data.callDate}</td>
-          <td>${data.callResult}</td>
-          <td>${data.whatsappSent}</td>
-          <td>${data.whatsappSeen}</td>
-          <td>${data.followupDate}</td>
-          <td>${data.leadStatus}</td>
-          <td>${data.notes}</td>
-          <td>
-            <button class="btn btn-sm btn-warning" onclick="openEdit('${doc.id}', ${JSON.stringify(data).replace(/"/g,'&quot;')})">Edit</button>
-            <button class="btn btn-sm btn-danger
+
+          <td
+            colspan="11"
+            class="text-center text-danger"
+          >
+            Error loading leads.
+            <br>
+            ${escapeHtml(error.message)}
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+
+  );
+
+
+/* =========================================
+   CREATE TABLE CELL
+========================================= */
+
+function createCell(value) {
+
+  const cell =
+    document.createElement("td");
+
+  cell.textContent =
+    value || "";
+
+  return cell;
+
+}
+
+
+/* =========================================
+   STATUS BADGE
+========================================= */
+
+function getStatusBadge(status) {
+
+  if(!status) {
+
+    return "";
+
+  }
+
+
+  const value =
+    status.toLowerCase();
+
+
+  let badgeClass =
+    "bg-secondary";
+
+
+  if(value === "new") {
+
+    badgeClass =
+      "bg-primary";
+
+  }
+
+  else if(
+    value === "interested"
+  ) {
+
+    badgeClass =
+      "bg-success";
+
+  }
+
+  else if(
+    value === "followup"
+  ) {
+
+    badgeClass =
+      "bg-warning text-dark";
+
+  }
+
+  else if(
+    value === "not interested"
+  ) {
+
+    badgeClass =
+      "bg-danger";
+
+  }
+
+  else if(
+    value === "converted"
+  ) {
+
+    badgeClass =
+      "bg-success";
+
+  }
+
+
+  return `
+
+    <span class="badge ${badgeClass}">
+
+      ${escapeHtml(status)}
+
+    </span>
+
+  `;
+
+}
+
+
+/* =========================================
+   OPEN EDIT MODAL
+========================================= */
+
+function openEdit(id, data) {
+
+  document.getElementById("editId").value =
+    id;
+
+
+  document.getElementById("editBusinessName").value =
+    data.businessName || "";
+
+
+  document.getElementById("editAddress").value =
+    data.address || "";
+
+
+  document.getElementById("editPhone").value =
+    data.phone || "";
+
+
+  document.getElementById("editCallDate").value =
+    data.callDate || "";
+
+
+  document.getElementById("editCallResult").value =
+    data.callResult || "";
+
+
+  document.getElementById("editWhatsappSent").value =
+    data.whatsappSent || "";
+
+
+  document.getElementById("editWhatsappSeen").value =
+    data.whatsappSeen || "";
+
+
+  document.getElementById("editFollowupDate").value =
+    data.followupDate || "";
+
+
+  document.getElementById("editLeadStatus").value =
+    data.leadStatus || "";
+
+
+  document.getElementById("editNotes").value =
+    data.notes || "";
+
+
+  editModal.show();
+
+}
+
+
+/* =========================================
+   UPDATE LEAD
+========================================= */
+
+editForm.addEventListener(
+  "submit",
+  async function(e) {
+
+    e.preventDefault();
+
+
+    const id =
+      document.getElementById("editId").value;
+
+
+    try {
+
+      const updatedData = {
+
+        businessName:
+          document.getElementById(
+            "editBusinessName"
+          ).value.trim(),
+
+        address:
+          document.getElementById(
+            "editAddress"
+          ).value.trim(),
+
+        phone:
+          document.getElementById(
+            "editPhone"
+          ).value.trim(),
+
+        callDate:
+          document.getElementById(
+            "editCallDate"
+          ).value,
+
+        callResult:
+          document.getElementById(
+            "editCallResult"
+          ).value.trim(),
+
+        whatsappSent:
+          document.getElementById(
+            "editWhatsappSent"
+          ).value.trim(),
+
+        whatsappSeen:
+          document.getElementById(
+            "editWhatsappSeen"
+          ).value.trim(),
+
+        followupDate:
+          document.getElementById(
+            "editFollowupDate"
+          ).value,
+
+        leadStatus:
+          document.getElementById(
+            "editLeadStatus"
+          ).value.trim(),
+
+        notes:
+          document.getElementById(
+            "editNotes"
+          ).value.trim(),
+
+        updatedAt:
+          firebase.firestore.FieldValue.serverTimestamp()
+
+      };
+
+
+      await db
+        .collection("leads")
+        .doc(id)
+        .update(updatedData);
+
+
+      alert("Lead updated successfully!");
+
+
+      editModal.hide();
+
+
+    } catch(error) {
+
+      console.error(
+        "Update Error:",
+        error
+      );
+
+
+      alert(
+        "Error updating lead:\n" +
+        error.message
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   DELETE LEAD
+========================================= */
+
+async function deleteLead(id) {
+
+  const confirmDelete =
+    confirm(
+      "Are you sure you want to delete this lead?"
+    );
+
+
+  if(!confirmDelete) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await db
+      .collection("leads")
+      .doc(id)
+      .delete();
+
+
+    alert(
+      "Lead deleted successfully!"
+    );
+
+
+  } catch(error) {
+
+    console.error(
+      "Delete Error:",
+      error
+    );
+
+
+    alert(
+      "Error deleting lead:\n" +
+      error.message
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   HTML ESCAPE
+   Prevents HTML injection in text fields
+========================================= */
+
+function escapeHtml(value) {
+
+  if(value === undefined || value === null) {
+
+    return "";
+
+  }
+
+
+  return String(value)
+
+    .replace(/&/g, "&amp;")
+
+    .replace(/</g, "&lt;")
+
+    .replace(/>/g, "&gt;")
+
+    .replace(/"/g, "&quot;")
+
+    .replace(/'/g, "&#039;");
+
+}
+
+</script>
+
+</body>
+</html>
