@@ -9,23 +9,16 @@
 
     <title>Lead Tracker</title>
 
-
     <!-- Bootstrap CSS -->
-
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
-
     <!-- Firebase Compat -->
-
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-
 
     <style>
 
@@ -76,7 +69,7 @@
 
 
 <!-- =====================================================
-     LOGIN SECTION
+LOGIN SECTION
 ====================================================== -->
 
 <div id="loginSection">
@@ -86,12 +79,12 @@
         <h2 class="text-center mb-4">
             Lead Tracker Login
         </h2>
-<b class="text-center mb-4">
-            User-H91250. RS-1.5 lac 
+
+        <b class="text-center mb-4">
+            User-H91250. RS-1.5 lac
         </b>
 
         <form id="loginForm">
-
 
             <!-- Email -->
 
@@ -145,7 +138,6 @@
                 class="alert alert-danger mt-3 d-none"
             ></div>
 
-
         </form>
 
     </div>
@@ -155,27 +147,21 @@
 
 
 <!-- =====================================================
-     MAIN APPLICATION
+MAIN APPLICATION
 ====================================================== -->
 
-<div
-    id="appSection"
-    class="container-fluid"
->
+<div id="appSection" class="container-fluid">
 
 
     <!-- =================================================
-         TOP BAR
+    TOP BAR
     ================================================== -->
 
-    <div
-        class="card shadow p-3 mb-4"
-    >
+    <div class="card shadow p-3 mb-4">
 
         <div
             class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3"
         >
-
 
             <div>
 
@@ -198,7 +184,6 @@
                 Logout
             </button>
 
-
         </div>
 
     </div>
@@ -206,11 +191,10 @@
 
 
     <!-- =================================================
-         ADD LEAD FORM
+    ADD LEAD FORM
     ================================================== -->
 
     <div class="card shadow p-4 mb-4">
-
 
         <h3 class="mb-4">
             Add New Lead
@@ -218,7 +202,6 @@
 
 
         <form id="leadForm">
-
 
             <div class="row">
 
@@ -395,7 +378,6 @@
 
                 </div>
 
-
             </div>
 
 
@@ -407,20 +389,17 @@
                 Save Lead
             </button>
 
-
         </form>
-
 
     </div>
 
 
 
     <!-- =================================================
-         LEADS TABLE
+    LEADS TABLE
     ================================================== -->
 
     <div class="card shadow p-4">
-
 
         <div
             class="d-flex justify-content-between align-items-center mb-3"
@@ -442,11 +421,9 @@
 
         <div class="table-container">
 
-
             <table
                 class="table table-bordered table-hover align-middle"
             >
-
 
                 <thead class="table-dark">
 
@@ -494,22 +471,18 @@
 
                 </tbody>
 
-
             </table>
-
 
         </div>
 
-
     </div>
-
 
 </div>
 
 
 
 <!-- =====================================================
-     EDIT MODAL
+EDIT MODAL
 ====================================================== -->
 
 <div
@@ -518,20 +491,16 @@
     tabindex="-1"
 >
 
-
     <div class="modal-dialog modal-lg">
-
 
         <div class="modal-content">
 
 
             <div class="modal-header">
 
-
                 <h5 class="modal-title">
                     Edit Lead
                 </h5>
-
 
                 <button
                     type="button"
@@ -539,16 +508,12 @@
                     data-bs-dismiss="modal"
                 ></button>
 
-
             </div>
-
 
 
             <div class="modal-body">
 
-
                 <form id="editForm">
-
 
                     <input
                         type="hidden"
@@ -731,7 +696,6 @@
 
                         </div>
 
-
                     </div>
 
 
@@ -742,12 +706,9 @@
                         Update Lead
                     </button>
 
-
                 </form>
 
-
             </div>
-
 
         </div>
 
@@ -758,20 +719,17 @@
 
 
 <!-- =====================================================
-     BOOTSTRAP JS
+BOOTSTRAP JS
 ====================================================== -->
 
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 
 <script>
 
 
 /* =====================================================
-   FIREBASE CONFIG
+FIREBASE CONFIG
 ====================================================== */
 
 const firebaseConfig = {
@@ -791,84 +749,63 @@ const firebaseConfig = {
 };
 
 
-
 /* =====================================================
-   INITIALIZE FIREBASE
+INITIALIZE FIREBASE
 ====================================================== */
 
 firebase.initializeApp(firebaseConfig);
 
+const auth = firebase.auth();
 
-const auth =
-    firebase.auth();
-
-
-const db =
-    firebase.firestore();
-
+const db = firebase.firestore();
 
 
 /* =====================================================
-   DOM ELEMENTS
+DOM ELEMENTS
 ====================================================== */
 
 const loginSection =
     document.getElementById("loginSection");
 
-
 const appSection =
     document.getElementById("appSection");
-
 
 const loginForm =
     document.getElementById("loginForm");
 
-
 const loginButton =
     document.getElementById("loginButton");
-
 
 const loginError =
     document.getElementById("loginError");
 
-
 const logoutButton =
     document.getElementById("logoutButton");
-
 
 const loggedInUser =
     document.getElementById("loggedInUser");
 
-
 const leadForm =
     document.getElementById("leadForm");
-
 
 const tableBody =
     document.getElementById("tableBody");
 
-
 const leadCount =
     document.getElementById("leadCount");
-
 
 const editForm =
     document.getElementById("editForm");
 
-
 const editModalElement =
     document.getElementById("editModal");
 
-
 const editModal =
-    new bootstrap.Modal(
-        editModalElement
-    );
-
+    new bootstrap.Modal(editModalElement);
 
 
 /* =====================================================
-   LOGIN
+LOGIN
 ====================================================== */
 
 loginForm.addEventListener(
@@ -877,60 +814,41 @@ loginForm.addEventListener(
 
         event.preventDefault();
 
-
-        loginError.classList.add(
-            "d-none"
-        );
-
+        loginError.classList.add("d-none");
 
         const email =
             document
-            .getElementById(
-                "loginEmail"
-            )
-            .value
-            .trim();
-
+                .getElementById("loginEmail")
+                .value
+                .trim();
 
         const password =
             document
-            .getElementById(
-                "loginPassword"
-            )
-            .value;
-
+                .getElementById("loginPassword")
+                .value;
 
         try {
 
+            loginButton.disabled = true;
 
-            loginButton.disabled =
-                true;
-
-
-            loginButton.innerText =
-                "Logging in...";
-
+            loginButton.innerText = "Logging in...";
 
             await auth.signInWithEmailAndPassword(
                 email,
                 password
             );
 
-
         }
 
         catch(error) {
-
 
             console.error(
                 "Login Error:",
                 error
             );
 
-
             let message =
                 "Login failed.";
-
 
             if(
                 error.code ===
@@ -942,7 +860,6 @@ loginForm.addEventListener(
 
             }
 
-
             else if(
                 error.code ===
                 "auth/user-not-found"
@@ -952,7 +869,6 @@ loginForm.addEventListener(
                     "User not found.";
 
             }
-
 
             else if(
                 error.code ===
@@ -964,7 +880,6 @@ loginForm.addEventListener(
 
             }
 
-
             else if(
                 error.code ===
                 "auth/invalid-email"
@@ -975,7 +890,6 @@ loginForm.addEventListener(
 
             }
 
-
             else {
 
                 message =
@@ -983,10 +897,8 @@ loginForm.addEventListener(
 
             }
 
-
             loginError.textContent =
                 message;
-
 
             loginError.classList.remove(
                 "d-none"
@@ -994,13 +906,9 @@ loginForm.addEventListener(
 
         }
 
-
         finally {
 
-
-            loginButton.disabled =
-                false;
-
+            loginButton.disabled = false;
 
             loginButton.innerText =
                 "Login";
@@ -1011,55 +919,39 @@ loginForm.addEventListener(
 );
 
 
-
 /* =====================================================
-   AUTH STATE
+AUTH STATE
 ====================================================== */
 
 auth.onAuthStateChanged(
     function(user) {
 
-
         if(user) {
-
-
-            /* User logged in */
 
             loginSection.style.display =
                 "none";
 
-
             appSection.style.display =
                 "block";
-
 
             loggedInUser.textContent =
                 "Logged in as: " +
                 user.email;
 
-
-            loadLeads(
-                user.uid
-            );
+            loadLeads(user.uid);
 
         }
 
         else {
 
-
-            /* User logged out */
-
             loginSection.style.display =
                 "block";
-
 
             appSection.style.display =
                 "none";
 
-
             loggedInUser.textContent =
                 "";
-
 
             tableBody.innerHTML =
                 "";
@@ -1070,32 +962,26 @@ auth.onAuthStateChanged(
 );
 
 
-
 /* =====================================================
-   LOGOUT
+LOGOUT
 ====================================================== */
 
 logoutButton.addEventListener(
     "click",
     async function() {
 
-
         try {
 
-
             await auth.signOut();
-
 
         }
 
         catch(error) {
 
-
             console.error(
                 "Logout Error:",
                 error
             );
-
 
             alert(
                 "Logout failed:\n\n" +
@@ -1108,48 +994,37 @@ logoutButton.addEventListener(
 );
 
 
-
 /* =====================================================
-   ADD LEAD
+ADD LEAD
 ====================================================== */
 
 leadForm.addEventListener(
     "submit",
     async function(event) {
 
-
         event.preventDefault();
-
 
         const user =
             auth.currentUser;
 
-
         if(!user) {
-
 
             alert(
                 "Please login first."
             );
 
-
             return;
 
         }
-
 
         const saveButton =
             document.getElementById(
                 "saveButton"
             );
 
-
         try {
 
-
-            saveButton.disabled =
-                true;
-
+            saveButton.disabled = true;
 
             saveButton.innerText =
                 "Saving...";
@@ -1157,113 +1032,98 @@ leadForm.addEventListener(
 
             const leadData = {
 
-
                 businessName:
                     document
-                    .getElementById(
-                        "businessName"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "businessName"
+                        )
+                        .value
+                        .trim(),
 
                 address:
                     document
-                    .getElementById(
-                        "address"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "address"
+                        )
+                        .value
+                        .trim(),
 
                 phone:
                     document
-                    .getElementById(
-                        "phone"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "phone"
+                        )
+                        .value
+                        .trim(),
 
                 callDate:
                     document
-                    .getElementById(
-                        "callDate"
-                    )
-                    .value,
-
+                        .getElementById(
+                            "callDate"
+                        )
+                        .value,
 
                 callResult:
                     document
-                    .getElementById(
-                        "callResult"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "callResult"
+                        )
+                        .value
+                        .trim(),
 
                 whatsappSent:
                     document
-                    .getElementById(
-                        "whatsappSent"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "whatsappSent"
+                        )
+                        .value
+                        .trim(),
 
                 whatsappSeen:
                     document
-                    .getElementById(
-                        "whatsappSeen"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "whatsappSeen"
+                        )
+                        .value
+                        .trim(),
 
                 followupDate:
                     document
-                    .getElementById(
-                        "followupDate"
-                    )
-                    .value,
-
+                        .getElementById(
+                            "followupDate"
+                        )
+                        .value,
 
                 leadStatus:
                     document
-                    .getElementById(
-                        "leadStatus"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "leadStatus"
+                        )
+                        .value
+                        .trim(),
 
                 notes:
                     document
-                    .getElementById(
-                        "notes"
-                    )
-                    .value
-                    .trim(),
-
-
-                /* IMPORTANT */
+                        .getElementById(
+                            "notes"
+                        )
+                        .value
+                        .trim(),
 
                 userId:
                     user.uid,
 
-
                 createdAt:
-                    firebase.firestore.FieldValue
-                    .serverTimestamp()
+                    firebase.firestore
+                        .FieldValue
+                        .serverTimestamp()
 
             };
 
 
             await db
                 .collection("leads")
-                .add(
-                    leadData
-                );
+                .add(leadData);
 
 
             alert(
@@ -1273,17 +1133,14 @@ leadForm.addEventListener(
 
             leadForm.reset();
 
-
         }
 
         catch(error) {
-
 
             console.error(
                 "Save Error:",
                 error
             );
-
 
             alert(
                 "Error saving lead:\n\n" +
@@ -1292,13 +1149,10 @@ leadForm.addEventListener(
 
         }
 
-
         finally {
-
 
             saveButton.disabled =
                 false;
-
 
             saveButton.innerText =
                 "Save Lead";
@@ -1309,43 +1163,37 @@ leadForm.addEventListener(
 );
 
 
-
 /* =====================================================
-   LOAD ONLY CURRENT USER LEADS
+LOAD ONLY CURRENT USER LEADS
 ====================================================== */
 
 function loadLeads(userId) {
 
-
     db.collection("leads")
+
         .where(
             "userId",
             "==",
             userId
         )
-        .onSnapshot(
 
+        .onSnapshot(
 
             function(snapshot) {
 
-
                 tableBody.innerHTML =
                     "";
-
 
                 leadCount.textContent =
                     snapshot.size +
                     (
                         snapshot.size === 1
-                        ? " Lead"
-                        : " Leads"
+                            ? " Lead"
+                            : " Leads"
                     );
 
 
-                if(
-                    snapshot.empty
-                ) {
-
+                if(snapshot.empty) {
 
                     tableBody.innerHTML = `
 
@@ -1355,13 +1203,14 @@ function loadLeads(userId) {
                                 colspan="11"
                                 class="text-center text-muted py-4"
                             >
+
                                 No leads found.
+
                             </td>
 
                         </tr>
 
                     `;
-
 
                     return;
 
@@ -1371,19 +1220,19 @@ function loadLeads(userId) {
                 snapshot.forEach(
                     function(doc) {
 
-
                         const data =
                             doc.data();
 
 
                         const row =
-                            document
-                            .createElement(
+                            document.createElement(
                                 "tr"
                             );
 
 
-                        /* Business */
+                        /* =================================================
+                        BUSINESS
+                        ================================================== */
 
                         row.appendChild(
                             createCell(
@@ -1392,7 +1241,9 @@ function loadLeads(userId) {
                         );
 
 
-                        /* Address */
+                        /* =================================================
+                        ADDRESS
+                        ================================================== */
 
                         row.appendChild(
                             createCell(
@@ -1401,44 +1252,36 @@ function loadLeads(userId) {
                         );
 
 
-                        /* Phone */
+                        /* =================================================
+                        PHONE
+                        ================================================== */
 
                         const phoneCell =
-                            document
-                            .createElement(
+                            document.createElement(
                                 "td"
                             );
 
 
-                        if(
-                            data.phone
-                        ) {
-
+                        if(data.phone) {
 
                             const phoneLink =
-                                document
-                                .createElement(
+                                document.createElement(
                                     "a"
                                 );
-
 
                             phoneLink.href =
                                 "tel:" +
                                 data.phone;
 
-
                             phoneLink.textContent =
                                 data.phone;
-
 
                             phoneLink.className =
                                 "phone-link";
 
-
-                            phoneCell
-                                .appendChild(
-                                    phoneLink
-                                );
+                            phoneCell.appendChild(
+                                phoneLink
+                            );
 
                         }
 
@@ -1448,7 +1291,9 @@ function loadLeads(userId) {
                         );
 
 
-                        /* Call Date */
+                        /* =================================================
+                        CALL DATE
+                        ================================================== */
 
                         row.appendChild(
                             createCell(
@@ -1457,7 +1302,9 @@ function loadLeads(userId) {
                         );
 
 
-                        /* Call Result */
+                        /* =================================================
+                        CALL RESULT
+                        ================================================== */
 
                         row.appendChild(
                             createCell(
@@ -1466,7 +1313,9 @@ function loadLeads(userId) {
                         );
 
 
-                        /* WhatsApp Sent */
+                        /* =================================================
+                        WHATSAPP SENT
+                        ================================================== */
 
                         row.appendChild(
                             createCell(
@@ -1475,7 +1324,9 @@ function loadLeads(userId) {
                         );
 
 
-                        /* WhatsApp Seen */
+                        /* =================================================
+                        WHATSAPP SEEN
+                        ================================================== */
 
                         row.appendChild(
                             createCell(
@@ -1484,7 +1335,9 @@ function loadLeads(userId) {
                         );
 
 
-                        /* Followup */
+                        /* =================================================
+                        FOLLOWUP
+                        ================================================== */
 
                         row.appendChild(
                             createCell(
@@ -1493,27 +1346,28 @@ function loadLeads(userId) {
                         );
 
 
-                        /* Status */
+                        /* =================================================
+                        STATUS
+                        ================================================== */
 
                         const statusCell =
-                            document
-                            .createElement(
+                            document.createElement(
                                 "td"
                             );
-
 
                         statusCell.innerHTML =
                             createStatusBadge(
                                 data.leadStatus
                             );
 
-
                         row.appendChild(
                             statusCell
                         );
 
 
-                        /* Notes */
+                        /* =================================================
+                        NOTES
+                        ================================================== */
 
                         row.appendChild(
                             createCell(
@@ -1522,35 +1376,153 @@ function loadLeads(userId) {
                         );
 
 
-                        /* Action */
+                        /* =================================================
+                        ACTION
+                        ================================================== */
 
                         const actionCell =
-                            document
-                            .createElement(
+                            document.createElement(
                                 "td"
                             );
-
 
                         actionCell.className =
                             "action-buttons";
 
 
-                        /* Edit */
+                        /* =================================================
+                        WHATSAPP BUTTON
+                        ================================================== */
 
-                        const editButton =
-                            document
-                            .createElement(
+                        const whatsappButton =
+                            document.createElement(
                                 "button"
                             );
 
+                        whatsappButton.type =
+                            "button";
+
+                        whatsappButton.className =
+                            "btn btn-sm btn-success me-1 mb-1";
+
+                        whatsappButton.innerHTML =
+                            "💬 WhatsApp";
+
+
+                        whatsappButton.addEventListener(
+                            "click",
+                            function() {
+
+                                if(!data.phone) {
+
+                                    alert(
+                                        "This lead does not have a phone number."
+                                    );
+
+                                    return;
+
+                                }
+
+
+                                /*
+                                Remove spaces,
+                                +,
+                                -,
+                                brackets,
+                                etc.
+                                */
+
+                                let phone =
+                                    String(
+                                        data.phone
+                                    ).replace(
+                                        /\D/g,
+                                        ""
+                                    );
+
+
+                                /*
+                                If number starts
+                                with 0,
+                                remove 0.
+                                */
+
+                                if(
+                                    phone.startsWith("0")
+                                ) {
+
+                                    phone =
+                                        phone.substring(
+                                            1
+                                        );
+
+                                }
+
+
+                                /*
+                                If Indian
+                                10-digit number,
+                                add +91.
+                                */
+
+                                if(
+                                    phone.length === 10
+                                ) {
+
+                                    phone =
+                                        "91" +
+                                        phone;
+
+                                }
+
+
+                                /*
+                                WhatsApp message
+                                */
+
+                                const message =
+                                    `Hello ${data.businessName || ""}, I am contacting you regarding your business website.`;
+
+
+                                /*
+                                Create WhatsApp URL
+                                */
+
+                                const whatsappURL =
+                                    "https://wa.me/" +
+                                    phone +
+                                    "?text=" +
+                                    encodeURIComponent(
+                                        message
+                                    );
+
+
+                                /*
+                                Open WhatsApp
+                                */
+
+                                window.open(
+                                    whatsappURL,
+                                    "_blank"
+                                );
+
+                            }
+                        );
+
+
+                        /* =================================================
+                        EDIT BUTTON
+                        ================================================== */
+
+                        const editButton =
+                            document.createElement(
+                                "button"
+                            );
 
                         editButton.type =
                             "button";
 
-
                         editButton.className =
-                            "btn btn-sm btn-warning me-1";
-
+                            "btn btn-sm btn-warning me-1 mb-1";
 
                         editButton.textContent =
                             "Edit";
@@ -1560,33 +1532,29 @@ function loadLeads(userId) {
                             "click",
                             function() {
 
-
                                 openEdit(
                                     doc.id,
                                     data
                                 );
 
-
                             }
                         );
 
 
-                        /* Delete */
+                        /* =================================================
+                        DELETE BUTTON
+                        ================================================== */
 
                         const deleteButton =
-                            document
-                            .createElement(
+                            document.createElement(
                                 "button"
                             );
-
 
                         deleteButton.type =
                             "button";
 
-
                         deleteButton.className =
-                            "btn btn-sm btn-danger";
-
+                            "btn btn-sm btn-danger mb-1";
 
                         deleteButton.textContent =
                             "Delete";
@@ -1596,26 +1564,29 @@ function loadLeads(userId) {
                             "click",
                             function() {
 
-
                                 deleteLead(
                                     doc.id
                                 );
-
 
                             }
                         );
 
 
-                        actionCell
-                            .appendChild(
-                                editButton
-                            );
+                        /* =================================================
+                        ADD BUTTONS TO ACTION CELL
+                        ================================================== */
 
+                        actionCell.appendChild(
+                            whatsappButton
+                        );
 
-                        actionCell
-                            .appendChild(
-                                deleteButton
-                            );
+                        actionCell.appendChild(
+                            editButton
+                        );
+
+                        actionCell.appendChild(
+                            deleteButton
+                        );
 
 
                         row.appendChild(
@@ -1623,19 +1594,16 @@ function loadLeads(userId) {
                         );
 
 
-                        tableBody
-                            .appendChild(
-                                row
-                            );
+                        tableBody.appendChild(
+                            row
+                        );
 
                     }
                 );
 
             },
 
-
             function(error) {
-
 
                 console.error(
                     "Firestore Error:",
@@ -1653,7 +1621,6 @@ function loadLeads(userId) {
                         >
 
                             Firestore Error:
-
                             <br>
 
                             ${escapeHtml(
@@ -1673,39 +1640,30 @@ function loadLeads(userId) {
 }
 
 
-
 /* =====================================================
-   CREATE TABLE CELL
+CREATE TABLE CELL
 ====================================================== */
 
 function createCell(value) {
 
-
     const cell =
-        document
-        .createElement(
+        document.createElement(
             "td"
         );
 
-
     cell.textContent =
         value || "";
-
 
     return cell;
 
 }
 
 
-
 /* =====================================================
-   STATUS BADGE
+STATUS BADGE
 ====================================================== */
 
-function createStatusBadge(
-    status
-) {
-
+function createStatusBadge(status) {
 
     if(!status) {
 
@@ -1715,57 +1673,42 @@ function createStatusBadge(
 
 
     const lower =
-        status
-        .toLowerCase();
+        status.toLowerCase();
 
 
     let badge =
         "bg-secondary";
 
 
-    if(
-        lower === "new"
-    ) {
+    if(lower === "new") {
 
         badge =
             "bg-primary";
 
     }
 
-
-    else if(
-        lower === "interested"
-    ) {
+    else if(lower === "interested") {
 
         badge =
             "bg-success";
 
     }
 
-
-    else if(
-        lower === "followup"
-    ) {
+    else if(lower === "followup") {
 
         badge =
             "bg-warning text-dark";
 
     }
 
-
-    else if(
-        lower === "not interested"
-    ) {
+    else if(lower === "not interested") {
 
         badge =
             "bg-danger";
 
     }
 
-
-    else if(
-        lower === "converted"
-    ) {
+    else if(lower === "converted") {
 
         badge =
             "bg-success";
@@ -1775,10 +1718,10 @@ function createStatusBadge(
 
     return `
 
-        <span
-            class="badge ${badge}"
-        >
+        <span class="badge ${badge}">
+
             ${escapeHtml(status)}
+
         </span>
 
     `;
@@ -1786,16 +1729,11 @@ function createStatusBadge(
 }
 
 
-
 /* =====================================================
-   OPEN EDIT MODAL
+OPEN EDIT MODAL
 ====================================================== */
 
-function openEdit(
-    id,
-    data
-) {
-
+function openEdit(id, data) {
 
     document.getElementById(
         "editId"
@@ -1868,15 +1806,13 @@ function openEdit(
 }
 
 
-
 /* =====================================================
-   UPDATE LEAD
+UPDATE LEAD
 ====================================================== */
 
 editForm.addEventListener(
     "submit",
     async function(event) {
-
 
         event.preventDefault();
 
@@ -1887,11 +1823,9 @@ editForm.addEventListener(
 
         if(!user) {
 
-
             alert(
                 "Please login first."
             );
-
 
             return;
 
@@ -1906,107 +1840,93 @@ editForm.addEventListener(
 
         try {
 
-
             const updatedData = {
-
 
                 businessName:
                     document
-                    .getElementById(
-                        "editBusinessName"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "editBusinessName"
+                        )
+                        .value
+                        .trim(),
 
                 address:
                     document
-                    .getElementById(
-                        "editAddress"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "editAddress"
+                        )
+                        .value
+                        .trim(),
 
                 phone:
                     document
-                    .getElementById(
-                        "editPhone"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "editPhone"
+                        )
+                        .value
+                        .trim(),
 
                 callDate:
                     document
-                    .getElementById(
-                        "editCallDate"
-                    )
-                    .value,
-
+                        .getElementById(
+                            "editCallDate"
+                        )
+                        .value,
 
                 callResult:
                     document
-                    .getElementById(
-                        "editCallResult"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "editCallResult"
+                        )
+                        .value
+                        .trim(),
 
                 whatsappSent:
                     document
-                    .getElementById(
-                        "editWhatsappSent"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "editWhatsappSent"
+                        )
+                        .value
+                        .trim(),
 
                 whatsappSeen:
                     document
-                    .getElementById(
-                        "editWhatsappSeen"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "editWhatsappSeen"
+                        )
+                        .value
+                        .trim(),
 
                 followupDate:
                     document
-                    .getElementById(
-                        "editFollowupDate"
-                    )
-                    .value,
-
+                        .getElementById(
+                            "editFollowupDate"
+                        )
+                        .value,
 
                 leadStatus:
                     document
-                    .getElementById(
-                        "editLeadStatus"
-                    )
-                    .value
-                    .trim(),
-
+                        .getElementById(
+                            "editLeadStatus"
+                        )
+                        .value
+                        .trim(),
 
                 notes:
                     document
-                    .getElementById(
-                        "editNotes"
-                    )
-                    .value
-                    .trim(),
-
-
-                /* Keep same user */
+                        .getElementById(
+                            "editNotes"
+                        )
+                        .value
+                        .trim(),
 
                 userId:
                     user.uid,
 
-
                 updatedAt:
-                    firebase.firestore.FieldValue
-                    .serverTimestamp()
+                    firebase.firestore
+                        .FieldValue
+                        .serverTimestamp()
 
             };
 
@@ -2026,11 +1946,9 @@ editForm.addEventListener(
 
             editModal.hide();
 
-
         }
 
         catch(error) {
-
 
             console.error(
                 "Update Error:",
@@ -2049,15 +1967,11 @@ editForm.addEventListener(
 );
 
 
-
 /* =====================================================
-   DELETE LEAD
+DELETE LEAD
 ====================================================== */
 
-async function deleteLead(
-    id
-) {
-
+async function deleteLead(id) {
 
     const confirmed =
         confirm(
@@ -2078,11 +1992,9 @@ async function deleteLead(
 
     if(!user) {
 
-
         alert(
             "Please login first."
         );
-
 
         return;
 
@@ -2090,7 +2002,6 @@ async function deleteLead(
 
 
     try {
-
 
         await db
             .collection("leads")
@@ -2102,11 +2013,9 @@ async function deleteLead(
             "Lead deleted successfully!"
         );
 
-
     }
 
     catch(error) {
-
 
         console.error(
             "Delete Error:",
@@ -2124,15 +2033,11 @@ async function deleteLead(
 }
 
 
-
 /* =====================================================
-   ESCAPE HTML
+ESCAPE HTML
 ====================================================== */
 
-function escapeHtml(
-    value
-) {
-
+function escapeHtml(value) {
 
     if(
         value === undefined ||
@@ -2173,11 +2078,8 @@ function escapeHtml(
 
 }
 
-
 </script>
-
 
 </body>
 
 </html>
-
