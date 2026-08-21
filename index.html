@@ -59,7 +59,90 @@
         #appSection {
             display: none;
         }
+/*popup script*/
+          /* Main Button */
+        .open-popup-btn {
+            padding: 12px 22px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
+        .open-popup-btn:hover {
+            background: #0056b3;
+        }
+
+        /* Popup Background */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Popup Box */
+        .popup-box {
+            background: white;
+            width: 90%;
+            max-width: 550px;
+            padding: 25px;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Close Button */
+        .close-popup {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 25px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        .close-popup:hover {
+            color: red;
+        }
+
+        /* Text Area */
+        #copyText {
+            width: 100%;
+            min-height: 180px;
+            padding: 12px;
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            resize: vertical;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        /* Copy Button */
+        .copy-btn {
+            margin-top: 12px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .copy-btn:hover {
+            background: #218838;
+        }
     </style>
 
 </head>
@@ -189,7 +272,40 @@ MAIN APPLICATION
     </div>
 
 
+<!-- Main Button -->
+    <button class="open-popup-btn" onclick="openPopup()">
+        Copy Text
+    </button>
+    <br>
+   <!-- Popup -->
+    <div class="popup-overlay" id="popup">
 
+        <div class="popup-box">
+
+            <!-- Close -->
+            <span class="close-popup" onclick="closePopup()">&times;</span>
+
+            <h2>Copy Message</h2>
+
+            <textarea id="copyText" readonly>Namaste Sir,
+
+Main website development service provide karta hoon.
+
+Aapke business ke liye ek professional website bana sakte hain jisse customers aapke business ke baare mein online information dekh sakenge.
+
+Agar aap interested hain to main aapko demo website dikha sakta hoon.
+
+Thank You.</textarea>
+
+            <!-- Copy Button -->
+            <button class="copy-btn" id="copyBtn" onclick="copyText()">
+                Copy Text
+            </button>
+
+        </div>
+
+    </div>
+    
     <!-- =================================================
     ADD LEAD FORM
     ================================================== -->
@@ -2078,7 +2194,51 @@ function escapeHtml(value) {
 
 }
 
-</script>
+
+
+        // Open Popup
+        function openPopup() {
+            document.getElementById("popup").style.display = "flex";
+        }
+
+        // Close Popup
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        // Copy Text
+        function copyText() {
+
+            const text = document.getElementById("copyText").value;
+            const button = document.getElementById("copyBtn");
+
+            navigator.clipboard.writeText(text).then(function() {
+
+                button.innerText = "Copied!";
+
+                setTimeout(function() {
+                    button.innerText = "Copy Text";
+                }, 2000);
+
+            }).catch(function() {
+
+                alert("Text copy nahi ho paya.");
+
+            });
+        }
+
+        // Popup ke bahar click karne par close
+        window.onclick = function(event) {
+
+            const popup = document.getElementById("popup");
+
+            if (event.target === popup) {
+                closePopup();
+            }
+
+        };
+
+    </script>
 
 </body>
 
